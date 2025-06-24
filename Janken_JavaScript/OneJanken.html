@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>じゃんけんゲーム</title>
+	<style>
+		body {
+			text-align: center;
+			padding-top: 100px;
+			cursor: default;
+			font-size: 50px;
+		}
+
+		input[type=number] {
+			font-size: 50px;
+			width: 3em;
+			max-width: 100%;
+			box-sizing: border-box;
+			margin: 0.5em 0;
+		}
+
+		button {
+			color: gray;
+			cursor: pointer;
+			font-size: 50px;
+		}
+
+		h3 {
+			color: gray;
+		}
+
+		p1 {
+			color: blue;
+		}
+
+		p2 {
+			font-size: 100px;
+		}
+
+		p3 {
+			color: red;
+		}
+
+		p4 {
+			font-size: 100px;
+		}
+
+		input[type=radio] {
+			visually: none;
+			cursor: pointer;
+		}
+
+		input[type=radio]:checked+label {
+			background: gray;
+		}
+
+		.hand-option {
+			margin: 20px;
+			font-size: 100px;
+			cursor: pointer;
+		}
+
+		.hand-option input {
+			display: none;
+		}
+
+		.hand-option input:checked+span {
+			background: gray;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>じゃんけんゲーム</h1>
+	<p1>CPU<br>
+	</p1>
+	<p2>❔<br>
+		<br>
+	</p2>
+	<p3>あなた<br>
+	</p3>
+	<label class="hand-option"> <input type="radio" name="hand" value="0" checked>
+		<span>✊</span></label><br> <label class="hand-option"> <input type="radio" name="hand" value="1">
+		<span>✌</span></label> <label class="hand-option"> <input type="radio" name="hand" value="2">
+		<span>✋</span></label><br><br> <button onclick="jankenjudge()">結果
+	</button>
+
+	<div id="JankenResult"></div>
+</body>
+<script>
+	function jankenjudge() {
+		let resultText = '';
+
+		let playerHand = parseInt(document.querySelector('input[name="hand"]:checked').value);
+		let computerHand = Math.floor(Math.random() * (2 + 1));
+		let result = (playerHand - computerHand + 3) % 3;
+
+		switch (result) {
+			case 0: resultText = "引き分けです"; break;
+			case 1: resultText = "あなたの負けです"; break;
+			case 2: resultText = "あなたの勝ちです"; break;
+		};
+
+		document.getElementById("JankenResult").innerHTML =
+			`<p>⇩</p><br><p1>CPU</p1><br><p2><strong>${getHandName(computerHand)}</strong></p2>
+			<br><br><p3>あなた</p3><br><p4><strong>${getHandName(playerHand)}</strong></p4><br><br>
+			<p5><strong>${resultText}</strong></p5>`;
+
+		function getHandName(handName) {
+			switch (handName) {
+				case 0: handName = "✊"; break;
+				case 1: handName = "✌"; break;
+				case 2: handName = "✋"; break;
+				default: "Error";
+			};
+			return handName;
+		}
+	}
+
+</script>
+
+</html>
